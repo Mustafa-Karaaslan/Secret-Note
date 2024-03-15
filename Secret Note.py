@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
-import os
+from tkinter import messagebox
+import base64
 
 #window
 window = Tk()
@@ -31,18 +32,27 @@ note = Text()
 note.config(height=15,width=40)
 note.pack()
 
-def save_click():
-    pass
+key_label = Label(text="Enter key:",font=font_1)
+key_label.pack()
 
-save_button = Button(text="Save & Secret",command=save_click)
+key_entry = Entry()
+key_entry.pack()
+
+def save_encrypt_click():
+    file_name = note_name_entry.get()
+    content = note.get(1.0,END)
+    key = key_entry.get()
+    with open(file_name, "a") as file:
+        file.write(content)
+    messagebox.showinfo("Transaction successful", f"The file named {file_name} was created!")
+
+save_button = Button(text="Save & Secret",command=save_encrypt_click)
 save_button.pack()
 
 def decrypt_click():
     pass
-
-decrypt_button = Button(text="decrypt",command=decrypt_click)
-
-
+decrypt_button = Button(text="Decrypt",command=decrypt_click)
+decrypt_button.pack()
 
 
 
