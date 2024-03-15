@@ -38,22 +38,34 @@ key_label.pack()
 key_entry = Entry()
 key_entry.pack()
 
-def save_encrypt_click():
+def save_encrypt_button_click():
+    global password
     file_name = note_name_entry.get()
-    content = note.get(1.0,END)
+    content = password
     key = key_entry.get()
     with open(file_name, "a") as file:
         file.write(content)
     messagebox.showinfo("Transaction successful", f"The file named {file_name} was created!")
 
-save_button = Button(text="Save & Secret",command=save_encrypt_click)
+save_button = Button(text="Save & Secret",command=save_encrypt_button_click)
 save_button.pack()
 
-def decrypt_click():
-    pass
-decrypt_button = Button(text="Decrypt",command=decrypt_click)
+def decrypt_button_click():
+    encrypted_text = note.get(1.0,END)  #User İnput
+    try:
+        decrypted_text = base64.b64decode(encrypted_text).decode("utf-8")  # Base64
+        messagebox.showinfo(f"Çözülmüş Metin:{decrypted_text}")
+    except:
+        messagebox.showerror("Hata", "Geçersiz şifrelenmiş metin!")
+
+decrypt_button = Button(text="Decrypt",command=decrypt_button_click)
 decrypt_button.pack()
 
+def encrypt_text():#b and pw_2
+    a = note.get(1.0, END)
+    pw = base64.b64encode(a.encode("utf-8")).decode("utf-8")  # Base64 şifreleme
+    return pw
+password= encrypt_text()
 
 
 window.mainloop()
